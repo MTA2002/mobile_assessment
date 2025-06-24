@@ -1,11 +1,14 @@
+import '../../../../core/widgets/animated_theme_toggle.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/favorites_bloc.dart';
 import '../bloc/favorites_event.dart';
 import '../bloc/favorites_state.dart';
-import '../../../countries/presentation/widgets/country_card.dart';
+
+import '../../../countries/presentation/widgets/animated_country_card.dart';
 import '../../../countries/presentation/pages/detail/detail_page.dart';
+import '../../../../core/utils/page_transitions.dart';
 
 class FavoritesPage extends StatefulWidget {
   const FavoritesPage({super.key});
@@ -26,7 +29,11 @@ class _FavoritesPageState extends State<FavoritesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        centerTitle: false,
         title: const Text('Favorites'),
+        actions: [
+          const AnimatedThemeToggle(),
+        ],
       ),
       body: BlocBuilder<FavoritesBloc, FavoritesState>(
         builder: (context, state) {
@@ -105,14 +112,14 @@ class _FavoritesPageState extends State<FavoritesPage> {
                 itemCount: favorites.length,
                 itemBuilder: (context, index) {
                   final favorite = favorites[index];
-                  return CountryCard(
+                  return AnimatedCountryCard(
                     country: favorite.toCountry(),
+                    index: index,
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(
-                          builder: (context) =>
-                              DetailPage(country: favorite.toCountry()),
+                        PageTransitions.slideTransition(
+                          DetailPage(country: favorite.toCountry()),
                         ),
                       );
                     },

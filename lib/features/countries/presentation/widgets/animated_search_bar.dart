@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 
-class SearchBarWidget extends StatelessWidget {
+class AnimatedSearchBar extends StatelessWidget {
   final TextEditingController controller;
   final ValueChanged<String> onChanged;
   final VoidCallback? onClear;
   final String hintText;
 
-  const SearchBarWidget({
+  const AnimatedSearchBar({
     super.key,
     required this.controller,
     required this.onChanged,
@@ -19,12 +19,12 @@ class SearchBarWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(
-          color: Colors.grey[300]!,
-          width: 1,
-        ),
+        // border: Border.all(
+        //   color: Theme.of(context).dividerColor,
+        //   width: 1,
+        // ),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.04),
@@ -36,28 +36,29 @@ class SearchBarWidget extends StatelessWidget {
       child: TextField(
         controller: controller,
         onChanged: onChanged,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 16,
-          color: Colors.black87,
+          color: Theme.of(context).textTheme.bodyLarge?.color,
           fontWeight: FontWeight.w400,
         ),
         decoration: InputDecoration(
           hintText: hintText,
           hintStyle: TextStyle(
             fontSize: 16,
-            color: Colors.grey[500],
+            color:
+                Theme.of(context).textTheme.bodyMedium?.color?.withOpacity(0.6),
             fontWeight: FontWeight.w400,
           ),
           prefixIcon: Icon(
             Icons.search,
-            color: Colors.grey[500],
+            color: Theme.of(context).iconTheme.color?.withOpacity(0.6),
             size: 22,
           ),
           suffixIcon: controller.text.isNotEmpty
               ? IconButton(
                   icon: Icon(
                     Icons.clear,
-                    color: Colors.grey[500],
+                    color: Theme.of(context).iconTheme.color?.withOpacity(0.6),
                     size: 22,
                   ),
                   onPressed: () {

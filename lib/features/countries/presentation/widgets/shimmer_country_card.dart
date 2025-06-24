@@ -8,7 +8,7 @@ class ShimmerCountryCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(8),
         boxShadow: [
           BoxShadow(
@@ -38,12 +38,17 @@ class ShimmerCountryCard extends StatelessWidget {
                   topRight: Radius.circular(8),
                 ),
                 child: Shimmer.fromColors(
-                  baseColor: Colors.grey[200]!,
-                  highlightColor: Colors.grey[50]!,
+                  baseColor: Theme.of(context).brightness == Brightness.dark
+                      ? Colors.grey[700]!
+                      : Colors.grey[200]!,
+                  highlightColor:
+                      Theme.of(context).brightness == Brightness.dark
+                          ? Colors.grey[600]!
+                          : Colors.grey[50]!,
                   child: Container(
                     width: double.infinity,
                     height: double.infinity,
-                    color: Colors.white,
+                    color: Theme.of(context).colorScheme.surface,
                   ),
                 ),
               ),
@@ -61,13 +66,18 @@ class ShimmerCountryCard extends StatelessWidget {
                 children: [
                   // Country name shimmer
                   Shimmer.fromColors(
-                    baseColor: Colors.grey[200]!,
-                    highlightColor: Colors.grey[50]!,
+                    baseColor: Theme.of(context).brightness == Brightness.dark
+                        ? Colors.grey[700]!
+                        : Colors.grey[200]!,
+                    highlightColor:
+                        Theme.of(context).brightness == Brightness.dark
+                            ? Colors.grey[600]!
+                            : Colors.grey[50]!,
                     child: Container(
                       width: double.infinity,
                       height: 18,
                       decoration: BoxDecoration(
-                        color: Colors.white,
+                        color: Theme.of(context).colorScheme.surface,
                         borderRadius: BorderRadius.circular(4),
                       ),
                     ),
@@ -78,13 +88,19 @@ class ShimmerCountryCard extends StatelessWidget {
                     children: [
                       // Population shimmer
                       Shimmer.fromColors(
-                        baseColor: Colors.grey[200]!,
-                        highlightColor: Colors.grey[50]!,
+                        baseColor:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? Colors.grey[700]!
+                                : Colors.grey[200]!,
+                        highlightColor:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? Colors.grey[600]!
+                                : Colors.grey[50]!,
                         child: Container(
                           width: 100,
                           height: 12,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -92,13 +108,19 @@ class ShimmerCountryCard extends StatelessWidget {
                       const SizedBox(height: 4),
                       // Region shimmer
                       Shimmer.fromColors(
-                        baseColor: Colors.grey[200]!,
-                        highlightColor: Colors.grey[50]!,
+                        baseColor:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? Colors.grey[700]!
+                                : Colors.grey[200]!,
+                        highlightColor:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? Colors.grey[600]!
+                                : Colors.grey[50]!,
                         child: Container(
                           width: 80,
                           height: 12,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),
@@ -106,13 +128,19 @@ class ShimmerCountryCard extends StatelessWidget {
                       const SizedBox(height: 4),
                       // Subregion shimmer
                       Shimmer.fromColors(
-                        baseColor: Colors.grey[200]!,
-                        highlightColor: Colors.grey[50]!,
+                        baseColor:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? Colors.grey[700]!
+                                : Colors.grey[200]!,
+                        highlightColor:
+                            Theme.of(context).brightness == Brightness.dark
+                                ? Colors.grey[600]!
+                                : Colors.grey[50]!,
                         child: Container(
                           width: 90,
                           height: 12,
                           decoration: BoxDecoration(
-                            color: Colors.white,
+                            color: Theme.of(context).colorScheme.surface,
                             borderRadius: BorderRadius.circular(4),
                           ),
                         ),

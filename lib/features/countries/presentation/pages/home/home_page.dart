@@ -1,17 +1,18 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
-import '../../../../../core/theme/theme_cubit.dart';
+import '../../../../../core/widgets/animated_theme_toggle.dart';
 import '../../../../favorites/presentation/bloc/favorites_bloc.dart';
 import '../../../../favorites/presentation/bloc/favorites_event.dart';
 import '../../../../favorites/presentation/bloc/favorites_state.dart';
 import '../../bloc/countries_bloc.dart';
 import '../../bloc/countries_event.dart';
 import '../../bloc/countries_state.dart';
-import '../../widgets/country_card.dart';
-import '../../widgets/search_bar_widget.dart';
+
 import '../../widgets/shimmer_country_card.dart';
+import '../../widgets/animated_country_card.dart';
+import '../../widgets/animated_search_bar.dart';
 import '../detail/detail_page.dart';
+import '../../../../../core/utils/page_transitions.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -37,16 +38,6 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
-  IconData _getThemeIcon(ThemeMode themeMode, BuildContext context) {
-    return themeMode == ThemeMode.dark ? Icons.light_mode : Icons.dark_mode;
-  }
-
-  String _getThemeTooltip(ThemeMode themeMode) {
-    return themeMode == ThemeMode.dark
-        ? 'Switch to light theme'
-        : 'Switch to dark theme';
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,25 +45,13 @@ class _HomePageState extends State<HomePage> {
         title: const Text('Countries'),
         centerTitle: false,
         actions: [
-          BlocBuilder<ThemeCubit, ThemeState>(
-            builder: (context, state) {
-              return IconButton(
-                icon: Icon(
-                  _getThemeIcon(state.themeMode, context),
-                ),
-                onPressed: () {
-                  context.read<ThemeCubit>().toggleTheme();
-                },
-                tooltip: _getThemeTooltip(state.themeMode),
-              );
-            },
-          ),
+          const AnimatedThemeToggle(),
         ],
       ),
       body: Column(
         children: [
           // Search Bar
-          SearchBarWidget(
+          AnimatedSearchBar(
             controller: _searchController,
             onChanged: (value) {
               if (value.isEmpty) {
@@ -92,7 +71,10 @@ class _HomePageState extends State<HomePage> {
               builder: (context, state) {
                 if (state is CountriesLoading || state is CountriesSearching) {
                   return GridView.builder(
-                    padding: const EdgeInsets.all(16),
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 12,
+                    ),
                     gridDelegate:
                         const SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
@@ -102,7 +84,20 @@ class _HomePageState extends State<HomePage> {
                     ),
                     itemCount: 8, // Show 8 shimmer cards
                     itemBuilder: (context, index) {
-                      return const ShimmerCountryCard();
+                      return TweenAnimationBuilder<double>(
+                        duration: Duration(milliseconds: 200 + (index * 100)),
+                        tween: Tween(begin: 0.0, end: 1.0),
+                        curve: Curves.easeOutCubic,
+                        builder: (context, value, child) {
+                          return Transform.translate(
+                            offset: Offset(0, 20 * (1 - value)),
+                            child: Opacity(
+                              opacity: value,
+                              child: const ShimmerCountryCard(),
+                            ),
+                          );
+                        },
+                      );
                     },
                   );
                 } else if (state is CountriesError ||
@@ -197,14 +192,14 @@ class _HomePageState extends State<HomePage> {
                                   .isCountryFavorite(country.name);
                             }
 
-                            return CountryCard(
+                            return AnimatedCountryCard(
                               country: country,
+                              index: index,
                               onTap: () {
                                 Navigator.push(
                                   context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        DetailPage(country: country),
+                                  PageTransitions.slideTransition(
+                                    DetailPage(country: country),
                                   ),
                                 );
                               },

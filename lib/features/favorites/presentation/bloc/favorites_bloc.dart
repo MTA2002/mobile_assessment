@@ -1,6 +1,5 @@
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../../countries/domain/entities/country.dart';
 import '../../domain/entities/favorite_country.dart';
 import '../../domain/usecases/add_to_favorites.dart';
 import '../../domain/usecases/get_favorites.dart';

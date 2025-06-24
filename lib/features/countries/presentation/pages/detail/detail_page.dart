@@ -25,11 +25,11 @@ class DetailPage extends StatelessWidget {
             expandedHeight: 250,
             floating: false,
             pinned: true,
-            backgroundColor: Colors.white,
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
             leading: Container(
               margin: const EdgeInsets.all(8),
               decoration: BoxDecoration(
-                color: Colors.white.withOpacity(0.9),
+                color: Theme.of(context).colorScheme.surface.withOpacity(0.9),
                 shape: BoxShape.circle,
                 boxShadow: [
                   BoxShadow(
@@ -40,7 +40,8 @@ class DetailPage extends StatelessWidget {
                 ],
               ),
               child: IconButton(
-                icon: const Icon(Icons.arrow_back, color: Colors.black),
+                icon: Icon(Icons.arrow_back,
+                    color: Theme.of(context).iconTheme.color),
                 onPressed: () => Navigator.pop(context),
               ),
             ),
@@ -48,7 +49,7 @@ class DetailPage extends StatelessWidget {
               Container(
                 margin: const EdgeInsets.all(8),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.9),
+                  color: Theme.of(context).colorScheme.surface.withOpacity(0.9),
                   shape: BoxShape.circle,
                   boxShadow: [
                     BoxShadow(
@@ -73,7 +74,9 @@ class DetailPage extends StatelessWidget {
                     return IconButton(
                       icon: Icon(
                         isFavorite ? Icons.favorite : Icons.favorite_border,
-                        color: isFavorite ? Colors.red : Colors.black,
+                        color: isFavorite
+                            ? Colors.red
+                            : Theme.of(context).iconTheme.color,
                       ),
                       onPressed: () {
                         context
@@ -92,17 +95,18 @@ class DetailPage extends StatelessWidget {
                   imageUrl: country.flag,
                   fit: BoxFit.cover,
                   placeholder: (context, url) => Container(
-                    color: Colors.grey[100],
+                    color: Theme.of(context).colorScheme.surface,
                     child: const Center(
                       child: CircularProgressIndicator(),
                     ),
                   ),
                   errorWidget: (context, url, error) => Container(
-                    color: Colors.grey[100],
-                    child: const Icon(
+                    color: Theme.of(context).colorScheme.surface,
+                    child: Icon(
                       Icons.flag,
                       size: 64,
-                      color: Colors.grey,
+                      color:
+                          Theme.of(context).iconTheme.color?.withOpacity(0.5),
                     ),
                   ),
                 ),
@@ -113,7 +117,7 @@ class DetailPage extends StatelessWidget {
           // Country Details
           SliverToBoxAdapter(
             child: Container(
-              color: Colors.white,
+              color: Theme.of(context).scaffoldBackgroundColor,
               child: Padding(
                 padding: const EdgeInsets.all(20),
                 child: Column(
@@ -122,52 +126,57 @@ class DetailPage extends StatelessWidget {
                     // Country Name
                     Text(
                       country.name,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontSize: 28,
                         fontWeight: FontWeight.bold,
-                        color: Colors.black87,
+                        color: Theme.of(context).textTheme.headlineLarge?.color,
                       ),
                     ),
                     const SizedBox(height: 24),
 
                     // Population Card
                     _buildDetailCard(
+                      context,
                       'Population',
                       _formatPopulation(country.population),
                       Icons.people_outline,
-                      Colors.blue,
+                      Theme.of(context).colorScheme.primary,
                     ),
                     const SizedBox(height: 16),
 
                     // Region Card
                     _buildDetailCard(
+                      context,
                       'Region',
                       country.region,
                       Icons.public,
-                      Colors.green,
+                      Theme.of(context).colorScheme.secondary,
                     ),
                     const SizedBox(height: 16),
 
                     // Subregion Card
                     _buildDetailCard(
+                      context,
                       'Subregion',
                       country.subregion,
                       Icons.location_on_outlined,
-                      Colors.orange,
+                      Theme.of(context).colorScheme.tertiary ??
+                          Theme.of(context).colorScheme.primary,
                     ),
                     const SizedBox(height: 16),
 
                     // Area Card
                     _buildDetailCard(
+                      context,
                       'Area',
                       '${_formatNumber(country.area)} km²',
                       Icons.straighten,
-                      Colors.purple,
+                      Theme.of(context).colorScheme.error,
                     ),
                     const SizedBox(height: 16),
 
                     // Timezones Card
-                    _buildTimezonesCard(),
+                    _buildTimezonesCard(context),
 
                     const SizedBox(height: 32),
                   ],
@@ -181,6 +190,7 @@ class DetailPage extends StatelessWidget {
   }
 
   Widget _buildDetailCard(
+    BuildContext context,
     String title,
     String value,
     IconData icon,
@@ -189,9 +199,9 @@ class DetailPage extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[200]!),
+        // border: Border.all(color: Theme.of(context).dividerColor),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.04),
@@ -224,16 +234,20 @@ class DetailPage extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w500,
-                    color: Colors.grey[600],
+                    color: Theme.of(context)
+                        .textTheme
+                        .bodyMedium
+                        ?.color
+                        ?.withOpacity(0.7),
                   ),
                 ),
                 const SizedBox(height: 4),
                 Text(
                   value,
-                  style: const TextStyle(
+                  style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.w600,
-                    color: Colors.black87,
+                    color: Theme.of(context).textTheme.bodyLarge?.color,
                   ),
                 ),
               ],
@@ -244,13 +258,13 @@ class DetailPage extends StatelessWidget {
     );
   }
 
-  Widget _buildTimezonesCard() {
+  Widget _buildTimezonesCard(BuildContext context) {
     return Container(
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        color: Theme.of(context).colorScheme.surface,
         borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: Colors.grey[200]!),
+        // border: Border.all(color: Theme.of(context).dividerColor),
         boxShadow: [
           BoxShadow(
             color: Colors.black.withOpacity(0.04),
@@ -267,12 +281,12 @@ class DetailPage extends StatelessWidget {
               Container(
                 padding: const EdgeInsets.all(12),
                 decoration: BoxDecoration(
-                  color: Colors.indigo.withOpacity(0.1),
+                  color: Theme.of(context).colorScheme.primary.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(10),
                 ),
-                child: const Icon(
+                child: Icon(
                   Icons.access_time,
-                  color: Colors.indigo,
+                  color: Theme.of(context).colorScheme.primary,
                   size: 24,
                 ),
               ),
@@ -282,7 +296,11 @@ class DetailPage extends StatelessWidget {
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
-                  color: Colors.grey[600],
+                  color: Theme.of(context)
+                      .textTheme
+                      .bodyMedium
+                      ?.color
+                      ?.withOpacity(0.7),
                 ),
               ),
             ],
@@ -298,15 +316,16 @@ class DetailPage extends StatelessWidget {
                   vertical: 8,
                 ),
                 decoration: BoxDecoration(
-                  color: Colors.grey[50],
+                  color:
+                      Theme.of(context).colorScheme.primary.withOpacity(0.05),
                   borderRadius: BorderRadius.circular(8),
-                  border: Border.all(color: Colors.grey[200]!),
+                  border: Border.all(color: Theme.of(context).dividerColor),
                 ),
                 child: Text(
                   timezone,
                   style: TextStyle(
                     fontSize: 13,
-                    color: Colors.grey[700],
+                    color: Theme.of(context).textTheme.bodyMedium?.color,
                     fontWeight: FontWeight.w500,
                   ),
                 ),
