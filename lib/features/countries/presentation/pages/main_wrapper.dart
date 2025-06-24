@@ -15,9 +15,7 @@ class _MainWrapperState extends State<MainWrapper> {
 
   final List<Widget> _pages = [
     const HomePage(), // Home
-    const SearchPage(), // Search - embedded in home
     const FavoritesPage(), // Favorites
-    const HomePage(), // Placeholder for additional tab
   ];
 
   @override
@@ -57,48 +55,12 @@ class _MainWrapperState extends State<MainWrapper> {
               label: 'Home',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.search_outlined),
-              activeIcon: Icon(Icons.search),
-              label: 'Search',
-            ),
-            BottomNavigationBarItem(
               icon: Icon(Icons.favorite_border),
               activeIcon: Icon(Icons.favorite),
               label: 'Favorites',
             ),
-            BottomNavigationBarItem(
-              icon: Icon(Icons.info_outline),
-              activeIcon: Icon(Icons.info),
-              label: 'About',
-            ),
           ],
         ),
-      ),
-    );
-  }
-}
-
-// Search Page Implementation
-class SearchPage extends StatefulWidget {
-  const SearchPage({super.key});
-
-  @override
-  State<SearchPage> createState() => _SearchPageState();
-}
-
-class _SearchPageState extends State<SearchPage> {
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Theme.of(context).colorScheme.background,
-      appBar: AppBar(
-        title: const Text('Search Countries'),
-        backgroundColor: Theme.of(context).colorScheme.surface,
-        elevation: 0,
-        centerTitle: true,
-      ),
-      body: const Center(
-        child: Text('Search functionality is integrated in Home page'),
       ),
     );
   }

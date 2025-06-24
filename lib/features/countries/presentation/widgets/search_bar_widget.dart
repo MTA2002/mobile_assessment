@@ -11,7 +11,7 @@ class SearchBarWidget extends StatelessWidget {
     required this.controller,
     required this.onChanged,
     this.onClear,
-    this.hintText = 'Search countries...',
+    this.hintText = 'Search for a country...',
   });
 
   @override
@@ -19,14 +19,15 @@ class SearchBarWidget extends StatelessWidget {
     return Container(
       margin: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Theme.of(context).colorScheme.surface,
+        color: Colors.white,
         borderRadius: BorderRadius.circular(12),
         border: Border.all(
-          color: Theme.of(context).dividerColor.withOpacity(0.2),
+          color: Colors.grey[300]!,
+          width: 1,
         ),
         boxShadow: [
           BoxShadow(
-            color: Colors.black.withOpacity(0.05),
+            color: Colors.black.withOpacity(0.04),
             blurRadius: 8,
             offset: const Offset(0, 2),
           ),
@@ -35,21 +36,29 @@ class SearchBarWidget extends StatelessWidget {
       child: TextField(
         controller: controller,
         onChanged: onChanged,
-        style: Theme.of(context).textTheme.bodyLarge,
+        style: const TextStyle(
+          fontSize: 16,
+          color: Colors.black87,
+          fontWeight: FontWeight.w400,
+        ),
         decoration: InputDecoration(
           hintText: hintText,
-          hintStyle: Theme.of(context).textTheme.bodyLarge?.copyWith(
-                color: Theme.of(context).textTheme.bodySmall?.color,
-              ),
+          hintStyle: TextStyle(
+            fontSize: 16,
+            color: Colors.grey[500],
+            fontWeight: FontWeight.w400,
+          ),
           prefixIcon: Icon(
             Icons.search,
-            color: Theme.of(context).iconTheme.color?.withOpacity(0.6),
+            color: Colors.grey[500],
+            size: 22,
           ),
           suffixIcon: controller.text.isNotEmpty
               ? IconButton(
                   icon: Icon(
                     Icons.clear,
-                    color: Theme.of(context).iconTheme.color?.withOpacity(0.6),
+                    color: Colors.grey[500],
+                    size: 22,
                   ),
                   onPressed: () {
                     controller.clear();

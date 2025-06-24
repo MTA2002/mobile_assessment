@@ -11,8 +11,8 @@ class ApiConstants {
   // Query Parameters
   static const String fieldsParam = 'fields';
 
-  // Common field sets
+  // Common field sets - REST Countries API v3.1 requires fields parameter for /all endpoint
   static const String basicFields = 'name,flags,population,region,capital';
   static const String detailFields =
-      'name,flags,population,region,subregion,capital,area,languages,currencies,timezones,borders';
+      'name,flags,population,region,subregion,capital,area,timezones';
 }

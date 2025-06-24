@@ -4,7 +4,7 @@ class AppTheme {
   // Light Theme Colors
   static const Color _lightPrimaryColor = Color(0xFF2196F3);
   static const Color _lightSecondaryColor = Color(0xFF03DAC6);
-  static const Color _lightBackgroundColor = Color(0xFFF5F5F5);
+  static const Color _lightBackgroundColor = Color(0xFFFFFFFF);
   static const Color _lightSurfaceColor = Color(0xFFFFFFFF);
   static const Color _lightErrorColor = Color(0xFFB00020);
   static const Color _lightOnPrimaryColor = Color(0xFFFFFFFF);
@@ -34,6 +34,7 @@ class AppTheme {
   static ThemeData lightTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.light,
+    scaffoldBackgroundColor: Colors.white,
     colorScheme: const ColorScheme.light(
       primary: _lightPrimaryColor,
       secondary: _lightSecondaryColor,
@@ -49,17 +50,17 @@ class AppTheme {
 
     // AppBar Theme
     appBarTheme: const AppBarTheme(
-      backgroundColor: _lightSurfaceColor,
-      foregroundColor: _lightOnSurfaceColor,
+      backgroundColor: Colors.white,
+      foregroundColor: Colors.black,
       elevation: 0,
       centerTitle: true,
       titleTextStyle: TextStyle(
-        color: _lightOnSurfaceColor,
+        color: Colors.black,
         fontSize: 20,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.bold,
       ),
       iconTheme: IconThemeData(
-        color: _lightOnSurfaceColor,
+        color: Colors.black,
         size: 24,
       ),
     ),
@@ -218,6 +219,7 @@ class AppTheme {
   static ThemeData darkTheme = ThemeData(
     useMaterial3: true,
     brightness: Brightness.dark,
+    scaffoldBackgroundColor: _darkBackgroundColor,
     colorScheme: const ColorScheme.dark(
       primary: _darkPrimaryColor,
       secondary: _darkSecondaryColor,
@@ -240,7 +242,7 @@ class AppTheme {
       titleTextStyle: TextStyle(
         color: _darkOnSurfaceColor,
         fontSize: 20,
-        fontWeight: FontWeight.w600,
+        fontWeight: FontWeight.bold,
       ),
       iconTheme: IconThemeData(
         color: _darkOnSurfaceColor,

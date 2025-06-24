@@ -14,6 +14,15 @@ import '../../features/countries/presentation/bloc/countries_bloc.dart';
 import '../api/api_consumer.dart';
 import '../api/dio_consumer.dart';
 import '../network/network_info.dart';
+import '../theme/theme_cubit.dart';
+import '../../features/favorites/data/datasources/favorites_local_datasource.dart';
+import '../../features/favorites/data/repositories/favorites_repository_impl.dart';
+import '../../features/favorites/domain/repositories/favorites_repository.dart';
+import '../../features/favorites/domain/usecases/add_to_favorites.dart';
+import '../../features/favorites/domain/usecases/get_favorites.dart';
+import '../../features/favorites/domain/usecases/is_favorite.dart';
+import '../../features/favorites/domain/usecases/remove_from_favorites.dart';
+import '../../features/favorites/presentation/bloc/favorites_bloc.dart';
 
 final sl = GetIt.instance;
 
@@ -26,6 +35,36 @@ Future<void> init() async {
       searchCountries: sl(),
       getCountryDetails: sl(),
     ),
+  );
+
+  //! Core - Theme
+  sl.registerLazySingleton(() => ThemeCubit());
+
+  //! Features - Favorites
+  // Bloc
+  sl.registerFactory(
+    () => FavoritesBloc(
+      getFavorites: sl(),
+      addToFavorites: sl(),
+      removeFromFavorites: sl(),
+      isFavorite: sl(),
+    ),
+  );
+
+  // Use cases
+  sl.registerLazySingleton(() => GetFavorites(sl()));
+  sl.registerLazySingleton(() => AddToFavorites(sl()));
+  sl.registerLazySingleton(() => RemoveFromFavorites(sl()));
+  sl.registerLazySingleton(() => IsFavorite(sl()));
+
+  // Repository
+  sl.registerLazySingleton<FavoritesRepository>(
+    () => FavoritesRepositoryImpl(localDataSource: sl()),
+  );
+
+  // Data sources
+  sl.registerLazySingleton<FavoritesLocalDataSource>(
+    () => FavoritesLocalDataSourceImpl(sharedPreferences: sl()),
   );
 
   // Use cases
